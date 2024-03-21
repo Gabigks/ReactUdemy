@@ -68,26 +68,34 @@ function Counter() {
 		// lowerDays(step);
 	}
 
-	function iStep() {
-		setStep((s) => s + 1);
-	}
-
-	function dStep() {
-		if (step > 1) setStep((s) => s - 1);
+	function handleReset() {
+		setCount(0);
+		setStep(1);
 	}
 
 	return (
 		<div>
-			<button onClick={dStep}>-</button>
-			<span>Step: {step}</span>
-			<button onClick={iStep}>+</button>
+			<div>
+				<input
+					type="range"
+					min="1"
+					max="10"
+					value={step}
+					onChange={(e) => setStep(Number(e.target.value))}
+				/>
+				<span> Step: {step}</span>
+			</div>
 
-			<br />
-			<button onClick={dCounter}>-</button>
-			<span>Counter: {count}</span>
-			<button onClick={iCounter}>+</button>
-
-			<br />
+			<div>
+				<button onClick={dCounter}>-</button>
+				<input
+					type="text"
+					placeholder={count}
+					value={count}
+					onChange={(e) => setCount(+e.target.value)}
+				/>
+				<button onClick={iCounter}>+</button>
+			</div>
 
 			<p>
 				<span>
@@ -99,6 +107,24 @@ function Counter() {
 				</span>
 				<span>{date.toDateString()}</span>
 			</p>
+
+			{/*Colocando a condicional para o estilo do botão reset*/}
+			{/* <div>
+				<button
+					style={count !== 0 ? {} : { display: "none" }}
+					onClick={handleReset}
+				>
+					Reset
+				</button>
+			</div> */}
+
+			{/*Colocando a condicional para aparecer ou não o botão*/}
+			{count !== 0 || step !== 1 ? (
+				<div>
+					<button onClick={handleReset}>Reset</button>
+				</div>
+			) : null}
+
 			{/* <p>
 				{count} dias a partir de hoje é {days[date.getDay()]}{" "}
 				{months[date.getMonth()]} {date.getDate()} {date.getFullYear()}
